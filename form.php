@@ -11,6 +11,21 @@
     <form action="form.php" method = "POST" enctype="multipart/form-data">
         <input type="text"placeholder='Enter your name' name ="C_Name">
         <br><br>
+        
+        ประเภทของมนุษย์ 
+        <br>
+        <select name="Tid" require>
+            <option value="">-please select-</option>
+            <?php foreach($result as $row){?>
+            <option value="<?php echo $row["Tid"];?>">
+        <?php echo $row["describ"]; ?>
+        </option>
+        <?php}?>
+            <!-- <option value="1">-คนปกติ-</option>
+            <option value="2">-คนบ้า-</option> -->
+        </select>
+
+        <br><br>
         <input type="text" placeholder='Enter your phone number' name = "PhoneNumber">
         <br>
         <H3>กรอกที่อยู่ของคุณ</H3>
@@ -36,7 +51,7 @@
         $tmpFile = $_FILES['sleeper']['tmp_name'];
         echo " upload file =".$uploadFile;
 
-            $sql_insert="insert into customer values (:C_Name,:PhoneNumber,:address,:sleeper)";
+            $sql_insert="insert into customer,type values (:C_Name,:Tid,:PhoneNumber,:address,:sleeper)";
 
             $stmt = $conn->prepare($sql_insert);
             $stmt->bindParam(':C_Name',$_POST['C_Name']);
